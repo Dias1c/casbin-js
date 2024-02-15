@@ -40,7 +40,8 @@
   "homepage": "https://github.com/Dias1c/casbin-js#readme",
   "devDependencies": {
     "ts-node": "^10.9.2",
-    "tsx": "^4.7.1"
+    "tsx": "^4.7.1",
+    "typescript": "^5.3.3"
   },
   "dependencies": {
     "casbin-core": "^0.0.0-beta.2"

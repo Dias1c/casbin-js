@@ -1,7 +1,7 @@
 {
   "name": "@diaskappassov/casbin-js",
   "version": "0.0.1",
-  "description": "Simple library that supports access control models like ACL, RBAC, ABAC in Frontend Javascript",
+  "description": "🔐 Simple library that supports access control models like ACL, RBAC, ABAC in Frontend Javascript",
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
   "type": "module",

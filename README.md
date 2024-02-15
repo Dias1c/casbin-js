@@ -1,8 +1,10 @@
 # casbin-js
 
-Alternative library of `casbin.js`
+🔐 Simple library that supports access control models like ACL, RBAC, ABAC in Frontend Javascript
 
-See https://casbin.org/docs/frontend/
+Alternative library of `casbin.js`.
+
+See more https://casbin.org/docs/frontend/
 
 ## TODO
 

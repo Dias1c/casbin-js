@@ -80,7 +80,7 @@ Authorizer.init(model, policy);
 
 You can check permissions with `can`, `canAll`, `canAny` methods, but before that YOU MUST INITIALIZE `Authorizer`.
 
-> !Important: The order of your request elements must follow the rules which you set in policy. See more: https://casbin.org/docs/syntax-for-models#request-definition
+> !Important: The order of your request elements must follow the rules which you set in `model`. See more: https://casbin.org/docs/syntax-for-models#request-definition
 
 #### Check permissions with `can` method
 

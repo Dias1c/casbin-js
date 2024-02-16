@@ -38,7 +38,7 @@ const policy = [
 /**
  * backend response imitation
  */
-export const getPermissionsFromBackend = () => {
+export const getPermissionsFromBackend = async () => {
   return {
     m: model,
     p: policy,

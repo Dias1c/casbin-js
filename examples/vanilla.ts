@@ -2,7 +2,7 @@ import { CAuthorizer } from "../src";
 import { getPermissionsFromBackend } from "./configs";
 
 const runExample = async () => {
-  const permissions = getPermissionsFromBackend();
+  const permissions = await getPermissionsFromBackend();
 
   // ! If you will not init authorizer, the methods like "can" will throw error
   // You can check does authorizer initialized with "isInited" method

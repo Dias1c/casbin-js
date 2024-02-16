@@ -29,6 +29,7 @@
     "casbin.js",
     "casbin",
     "enforcer",
+    "authorizer",
     "ACL",
     "ABAC",
     "RBAC"

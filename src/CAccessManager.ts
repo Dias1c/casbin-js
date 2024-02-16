@@ -2,7 +2,10 @@ import * as core from "casbin-core";
 
 export class CAccessManager {
   private enforcer?: core.Enforcer;
-  private onInitCallbacksQueue: (() => void)[] = [];
+  /**
+   * callback function thats runs and flushes after successful calling funciton init
+   */
+  private initOneTimeCallbacks: (() => void)[] = [];
 
   /**
    * Inits core enforcer with following model and policy
@@ -39,7 +42,7 @@ export class CAccessManager {
     const adapter = new core.MemoryAdapter(policy);
 
     this.enforcer = await core.newEnforcer(m, adapter);
-    await this.flushOnInitCallbacksQueue();
+    await this.executeInitOneTimeCallbacks();
   }
 
   public isInited(): boolean {
@@ -64,12 +67,12 @@ export class CAccessManager {
   }
 
   /**
-   * Runs all function in `onInitCallbacksQueue` and removes them from queue
+   * Runs all function in `initOneTimeCallbacks` with removing them
    */
-  private async flushOnInitCallbacksQueue() {
-    if (!this.onInitCallbacksQueue.length) return;
-    while (this.onInitCallbacksQueue.length) {
-      const func = this.onInitCallbacksQueue.shift();
+  private async executeInitOneTimeCallbacks() {
+    if (!this.initOneTimeCallbacks.length) return;
+    while (this.initOneTimeCallbacks.length) {
+      const func = this.initOneTimeCallbacks.shift();
       if (func) func();
     }
   }
@@ -78,8 +81,8 @@ export class CAccessManager {
    * Add function to queue of function, which runs once on init and removes from queue
    * @param func is function which runs after initing enforcer
    */
-  public addListenerToInitCallbackQueue(func: () => void) {
-    this.onInitCallbacksQueue.push(func);
+  public appendInitOneTimeCallbacks(func: () => void) {
+    this.initOneTimeCallbacks.push(func);
   }
 
   /**

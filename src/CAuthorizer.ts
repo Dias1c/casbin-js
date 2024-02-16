@@ -1,6 +1,6 @@
 import * as core from "casbin-core";
 
-export class CAccessManager {
+export class CAuthorizer {
   private enforcer?: core.Enforcer;
   /**
    * callback function thats runs and flushes after successful calling funciton init
@@ -51,8 +51,6 @@ export class CAccessManager {
 
   /**
    * removes inited enforcer
-   *
-   * After `reset` you must reinitialize `CAccessManager`
    */
   public reset() {
     this.enforcer = undefined;

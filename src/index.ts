@@ -1,1 +1,1 @@
-export { CAccessManager } from "./CAccessManager.js";
+export { CAuthorizer } from "./CAuthorizer.js";

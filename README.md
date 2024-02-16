@@ -4,7 +4,7 @@
 
 <p align="center">
   <img alt="ts" src="https://badgen.net/badge/-/TypeScript?icon=typescript&label&labelColor=blue&color=555555">
-  <a href="https://www.npmjs.com/package/@diaskappassov/hungry-local-storage">
+  <a href="https://www.npmjs.com/package/@diaskappassov/casbin-js">
     <img alt="Visit the NPM page" src="https://img.shields.io/npm/v/@diaskappassov/casbin-js"/>
   </a>
   <a href="https://github.com/Dias1c/casbin-js/">

@@ -81,7 +81,7 @@ export class CAccessManager {
    * Add function to queue of function, which runs once on init and removes from queue
    * @param func is function which runs after initing enforcer
    */
-  public appendInitOneTimeCallbacks(func: () => void) {
+  public addToInitOneTimeCallbacks(func: () => void) {
     this.initOneTimeCallbacks.push(func);
   }
 

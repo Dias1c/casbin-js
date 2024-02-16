@@ -82,7 +82,7 @@ const runExample = async () => {
   );
   console.log();
 
-  // ! The order of your request elements must follow the rules which you set in policy
+  // ! The order of your request elements must follow the rules which you set in `model`
   // ? See more: https://casbin.org/docs/syntax-for-models#request-definition
   console.log("- the order of requests are important");
   console.log(

@@ -17,7 +17,8 @@
   "scripts": {
     "build": "tsc -p tsconfig.json && tsc -p tsconfig.cjs.json",
     "test": "tsx --test $(find src -type f -name '*.test.ts')",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "example:vanilla": "tsx examples/vanilla.ts"
   },
   "repository": {
     "type": "git",

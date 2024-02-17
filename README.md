@@ -98,13 +98,13 @@ await Authorizer.can("cat", "run", "ground"); // true
 #### Check permissions with `canAll` method
 
 ```ts
-// returns `false` cause one of condition returned `false`
+// returns `false` cause one of conditions returned `false`
 await Authorizer.canAll([
   ["cat", "breathe", "air"],
   ["fish", "breathe", "air"],
 ]);
 
-// returns `true` cause all condition returned `true`
+// returns `true` cause all conditions returned `true`
 await Authorizer.canAll([
   ["cat", "breathe", "air"],
   ["bird", "breathe", "air"],
@@ -114,13 +114,13 @@ await Authorizer.canAll([
 #### Check permissions with `canAny` method
 
 ```ts
-// returns `true` cause one of condition returned `true`
+// returns `true` cause one of conditions returned `true`
 await authorizer.canAny([
   ["cat", "breathe", "air"],
   ["fish", "breathe", "air"],
 ]);
 
-// returns `false` cause all condition returned `false`
+// returns `false` cause all conditions returned `false`
 await authorizer.canAny([
   ["cat", "fly", "air"],
   ["fish", "fly", "air"],

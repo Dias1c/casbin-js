@@ -57,13 +57,13 @@ export function useAuthorizerSafelyChecker() {
 /**
  * @returns permissions for given rvals
  */
-export function useAuthorizerCan(...rvals: string[]) {
+export function useAuthorizerCan(rvals: string[]) {
   const { safelyCheck } = useAuthorizerSafelyChecker();
   const [can, setCan] = useState(false);
 
   useEffect(() => {
     safelyCheck({
-      onSuccess: async () => setCan(await Authorizer.can(...rvals)),
+      onSuccess: async () => setCan(await Authorizer.can(rvals)),
       onFail: () => setCan(false),
     });
   }, [...rvals, Authorizer.isInited()]);
@@ -72,8 +72,8 @@ export function useAuthorizerCan(...rvals: string[]) {
 }
 
 /**
- * @returns children - if `Authorizer.can(...rvals)` returns true
- * @returns childrenWhenNotAvailable - if `Authorizer.can(...rvals)` returns false
+ * @returns children - if `Authorizer.can(rvals)` returns true
+ * @returns childrenWhenNotAvailable - if `Authorizer.can(rvals)` returns false
  */
 export const AuthorizerCan = ({
   rvals,
@@ -84,7 +84,7 @@ export const AuthorizerCan = ({
   children: ReactNode;
   childrenWhenNotAvailable?: ReactNode;
 }) => {
-  const { can } = useAuthorizerCan(...rvals);
+  const { can } = useAuthorizerCan(rvals);
 
   if (can) return children;
   return childrenWhenNotAvailable;
@@ -103,7 +103,7 @@ export function useAuthorizerCanListRvals(listRvals: string[][]) {
       let result: string[][] = [];
       for (let i = 0; i < listRvals.length; i++) {
         const rvals = listRvals[i];
-        if (await Authorizer.can(...rvals)) result.push(rvals);
+        if (await Authorizer.can(rvals)) result.push(rvals);
       }
       setAvailableListRvals(result);
     };

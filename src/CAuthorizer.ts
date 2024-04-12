@@ -94,7 +94,7 @@ export class CAuthorizer {
    *              of strings, can be class instances if ABAC is used.
    * @returns whether to allow the request.
    */
-  public async can(...rvals: string[]): Promise<boolean> {
+  public async can(rvals: string[]): Promise<boolean> {
     if (!this.isInited()) throw new Error("Enforcer is not initialized");
     return await this.enforcer!.enforce(...rvals);
   }
@@ -109,7 +109,7 @@ export class CAuthorizer {
   public async canAny(listRvals: string[][]): Promise<boolean> {
     if (!this.isInited()) throw new Error("Enforcer is not initialized");
     for (let i = 0; i < listRvals.length; i++) {
-      const canThis = await this.can(...listRvals[i]);
+      const canThis = await this.can(listRvals[i]);
       if (!canThis) continue;
       return true;
     }
@@ -126,7 +126,7 @@ export class CAuthorizer {
   public async canAll(listRvals: string[][]): Promise<boolean> {
     if (!this.isInited()) throw new Error("Enforcer is not initialized");
     for (let i = 0; i < listRvals.length; i++) {
-      const canThis = await this.can(...listRvals[i]);
+      const canThis = await this.can(listRvals[i]);
       if (!canThis) return false;
     }
     return true;

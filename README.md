@@ -87,12 +87,12 @@ You can check permissions with `can`, `canAll`, `canAny` methods, but before tha
 > Throws error if `Authorizer` not initialized
 
 ```ts
-await Authorizer.can("fish", "fly", "air"); // false
-await Authorizer.can("fish", "swim", "ground"); // false
-await Authorizer.can("fish", "swim", "water"); // true
-await Authorizer.can("cat", "swim", "water"); // true
-await Authorizer.can("bird", "run", "ground"); // false
-await Authorizer.can("cat", "run", "ground"); // true
+await Authorizer.can(["fish", "fly", "air"]); // false
+await Authorizer.can(["fish", "swim", "ground"]); // false
+await Authorizer.can(["fish", "swim", "water"]); // true
+await Authorizer.can(["cat", "swim", "water"]); // true
+await Authorizer.can(["bird", "run", "ground"]); // false
+await Authorizer.can(["cat", "run", "ground"]); // true
 ```
 
 #### Check permissions with `canAll` method

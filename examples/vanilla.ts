@@ -24,27 +24,27 @@ const runExample = async () => {
   console.log("- check permissions with authorizer.can");
   console.log(
     "fish fly air?".padEnd(30),
-    await authorizer.can("fish", "fly", "air")
+    await authorizer.can(["fish", "fly", "air"])
   );
   console.log(
     "fish walk ground?".padEnd(30),
-    await authorizer.can("fish", "swim", "ground")
+    await authorizer.can(["fish", "swim", "ground"])
   );
   console.log(
     "fish swim water?".padEnd(30),
-    await authorizer.can("fish", "swim", "water")
+    await authorizer.can(["fish", "swim", "water"])
   );
   console.log(
     "cat swim water?".padEnd(30),
-    await authorizer.can("cat", "swim", "water")
+    await authorizer.can(["cat", "swim", "water"])
   );
   console.log(
     "bird run ground?".padEnd(30),
-    await authorizer.can("bird", "run", "ground")
+    await authorizer.can(["bird", "run", "ground"])
   );
   console.log(
     "cat run ground?".padEnd(30),
-    await authorizer.can("cat", "run", "ground")
+    await authorizer.can(["cat", "run", "ground"])
   );
   console.log();
 
@@ -87,15 +87,15 @@ const runExample = async () => {
   console.log("- the order of requests are important");
   console.log(
     "invalid request example".padEnd(30),
-    await authorizer.can("fish", "water", "swim")
+    await authorizer.can(["fish", "water", "swim"])
   );
   console.log(
     "invalid request example".padEnd(30),
-    await authorizer.can("water", "swim", "fish")
+    await authorizer.can(["water", "swim", "fish"])
   );
   console.log(
     "correct request example".padEnd(30),
-    await authorizer.can("fish", "swim", "water")
+    await authorizer.can(["fish", "swim", "water"])
   );
 };
 

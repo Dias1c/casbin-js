@@ -27,7 +27,7 @@ const loadPermissions = async (onInitCallback?: () => void) => {
 };
 
 /**
- * returns function which inits `Authorizer` and runs onSuccess if `Authorizer` was inited
+ * @returns function which inits `Authorizer` and runs onSuccess if `Authorizer` was inited
  */
 export function useAuthorizerSafelyChecker() {
   const safelyCheck = useCallback(
@@ -70,9 +70,10 @@ export function useAuthorizerCan(...rvals: string[]) {
 
   return { can };
 }
+
 /**
- * @returns children - if `Authorization.can(...rvals)` returns true
- * @returns childrenWhenNotAvailable - if `Authorization.can(...rvals)` returns false
+ * @returns children - if `Authorizer.can(...rvals)` returns true
+ * @returns childrenWhenNotAvailable - if `Authorizer.can(...rvals)` returns false
  */
 export const AuthorizerCan = ({
   rvals,
@@ -89,7 +90,50 @@ export const AuthorizerCan = ({
   return childrenWhenNotAvailable;
 };
 
+/**
+ *
+ * @param listRvals array of rvals
+ * @returns filtered array of rvals where `Authorizer.can()` returned true
+ */
+export function useAuthorizerCanListRvals(listRvals: string[][]) {
+  const [availableListRvals, setAvailableListRvals] = useState<string[][]>([]);
+
+  const loadIsAvailable = async () => {
+    const setAvailableAfterInit = async () => {
+      let result: string[][] = [];
+      for (let i = 0; i < listRvals.length; i++) {
+        const rvals = listRvals[i];
+        if (await Authorizer.can(...rvals)) result.push(rvals);
+      }
+      setAvailableListRvals(result);
+    };
+
+    try {
+      if (!Authorizer.isInited()) {
+        await loadPermissions(setAvailableAfterInit);
+      } else {
+        await setAvailableAfterInit();
+      }
+    } catch (error) {
+      console.error("loadIsAvailable", error);
+      setAvailableListRvals([]);
+    }
+  };
+
+  useEffect(() => {
+    loadIsAvailable();
+  }, [...listRvals, Authorizer.isInited()]);
+
+  return { availableListRvals };
+}
+
 export function App() {
+  const { availableListRvals } = useAuthorizerCanListRvals([
+    ["fish", "swim", "water"],
+    ["bird", "swim", "water"],
+    ["bird", "breathe", "water"],
+  ]);
+
   return (
     <div>
       <h1>Authorizer Usage Example on react</h1>
@@ -104,6 +148,11 @@ export function App() {
       <AuthorizerCan rvals={["cat", "swim", "water"]}>
         <h2>Cat can swim water</h2>
       </AuthorizerCan>
+
+      <p>useAuthorizerCanListRvals result</p>
+      {availableListRvals.map((rvals) => {
+        return <h2>{rvals}</h2>;
+      })}
     </div>
   );
 }

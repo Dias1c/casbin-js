@@ -12,6 +12,8 @@
   </a>
 </p>
 
+Changelogs [here](./CHANGELOGS.md).
+
 See more about casbin [here](https://casbin.org/docs/overview).
 
 ## Installation

@@ -10,10 +10,8 @@ const Authorizer = new CAuthorizer();
 
 let isLoading = false;
 const loadPermissions = async (onInitCallback?: () => void) => {
-  if (isLoading) {
-    if (onInitCallback) Authorizer.addToInitOneTimeCallbacks(onInitCallback);
-    return;
-  }
+  if (onInitCallback) Authorizer.addToInitOneTimeCallbacks(onInitCallback);
+  if (isLoading) return;
 
   try {
     isLoading = true;

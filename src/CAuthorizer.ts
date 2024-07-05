@@ -1,5 +1,7 @@
 import * as core from "casbin-core";
 
+const errEnforcerNotInitialized = new Error("Enforcer is not initialized");
+
 export class CAuthorizer {
   private enforcer?: core.Enforcer;
   /**
@@ -95,7 +97,7 @@ export class CAuthorizer {
    * @returns whether to allow the request.
    */
   public async can(rvals: string[]): Promise<boolean> {
-    if (!this.isInited()) throw new Error("Enforcer is not initialized");
+    if (!this.isInited()) throw errEnforcerNotInitialized;
     return await this.enforcer!.enforce(...rvals);
   }
 
@@ -107,10 +109,10 @@ export class CAuthorizer {
    * @returns `true` if function `can` returns `true` for one of `listRvals` result
    */
   public async canAny(listRvals: string[][]): Promise<boolean> {
-    if (!this.isInited()) throw new Error("Enforcer is not initialized");
+    if (!this.isInited()) throw errEnforcerNotInitialized;
     for (let i = 0; i < listRvals.length; i++) {
-      const canThis = await this.can(listRvals[i]);
-      if (!canThis) continue;
+      const allowed = await this.can(listRvals[i]);
+      if (!allowed) continue;
       return true;
     }
     return false;
@@ -124,11 +126,40 @@ export class CAuthorizer {
    * @returns `true` if function `can` returns `true` for all `listRvals` results
    */
   public async canAll(listRvals: string[][]): Promise<boolean> {
-    if (!this.isInited()) throw new Error("Enforcer is not initialized");
+    if (!this.isInited()) throw errEnforcerNotInitialized;
     for (let i = 0; i < listRvals.length; i++) {
-      const canThis = await this.can(listRvals[i]);
-      if (!canThis) return false;
+      const allowed = await this.can(listRvals[i]);
+      if (!allowed) return false;
     }
     return true;
+  }
+
+  /**
+   * @throws when enforcer is not initialized.
+   * @throws when rvals count not match it can throw error.
+   *
+   * @param listRvals
+   * @returns a filtered `listRvals` containing only the elements for which the `can` method returned `true`
+   *
+   * @example
+   * // ? after initizlization `CAuthoraizer` with permissions
+   * const rvalsA = ["fish", "swim", "water"]
+   * const rvalsB = ["fish", "fly", "air"]
+   *
+   * console.log(await auth.can(rvalsA)) // true
+   * console.log(await auth.can(rvalsB)) // false
+   *
+   * console.log(await auth.filterByCan([rvalsA, rvalsB])) // [ [ 'fish', 'swim', 'water' ] ]
+   */
+  public async filterByCan(listRvals: string[][]): Promise<string[][]> {
+    if (!this.isInited()) throw errEnforcerNotInitialized;
+
+    const result: string[][] = [];
+    for (let i = 0; i < listRvals.length; i++) {
+      const allowed = await this.can(listRvals[i]);
+      if (!allowed) continue;
+      result.push(listRvals[i]);
+    }
+    return result;
   }
 }

@@ -100,11 +100,7 @@ export function useAuthorizerCanListRvals(listRvals: string[][]) {
 
   const loadIsAvailable = async () => {
     const setAvailableAfterInit = async () => {
-      let result: string[][] = [];
-      for (let i = 0; i < listRvals.length; i++) {
-        const rvals = listRvals[i];
-        if (await Authorizer.can(rvals)) result.push(rvals);
-      }
+      let result: string[][] = await Authorizer.filterByCan(listRvals);
       setAvailableListRvals(result);
     };
 

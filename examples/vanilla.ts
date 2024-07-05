@@ -97,6 +97,18 @@ const runExample = async () => {
     "correct request example".padEnd(30),
     await authorizer.can(["fish", "swim", "water"])
   );
+  console.log();
+
+  console.log("- Use filterByCan to filter allowed list of rvals");
+  const listRvals = [
+    ["cat", "breathe", "air"],
+    ["fish", "breathe", "air"],
+  ];
+  console.log("listRvals:", listRvals);
+  console.log(
+    "listRvals filterByCan:",
+    await authorizer.filterByCan(listRvals)
+  );
 };
 
 runExample();

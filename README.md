@@ -83,11 +83,13 @@ Authorizer.init(model, policy);
 
 You can check permissions with `can`, `canAll`, `canAny` methods, but before that YOU MUST INITIALIZE `Authorizer`.
 
-> !Important: The order of your request elements must follow the rules which you set in `model`. See more: https://casbin.org/docs/syntax-for-models#request-definition
+> [!IMPORTANT]
+> The order of your request elements must follow the rules which you set in `model`. See more: https://casbin.org/docs/syntax-for-models#request-definition
 
 #### Check permissions with `can` method
 
-> Throws error if `Authorizer` not initialized
+> [!WARNING]
+> If the `Authorizer` is not initialized it throws error
 
 ```ts
 await Authorizer.can(["fish", "fly", "air"]); // false

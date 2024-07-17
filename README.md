@@ -5,7 +5,8 @@
 <p align="center">
   <img alt="ts" src="https://badgen.net/badge/-/TypeScript?icon=typescript&label&labelColor=blue&color=555555">
   <a href="https://www.npmjs.com/package/@diaskappassov/casbin-js">
-    <img alt="Visit the NPM page" src="https://img.shields.io/npm/v/@diaskappassov/casbin-js"/>
+    <img alt="NPM package version" src="https://img.shields.io/npm/v/@diaskappassov/casbin-js"/>
+    <img alt="NPM package downloads count" src="https://img.shields.io/npm/dy/@diaskappassov/casbin-js?label=Downloads&logo=npm" />
   </a>
   <a href="https://github.com/Dias1c/casbin-js/">
     <img alt="Visit package GitHub page" src="https://img.shields.io/github/stars/Dias1c/casbin-js?style=social&label=GitHub&maxAge=2592000"/>

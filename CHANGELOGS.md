@@ -1,5 +1,11 @@
 # Changelogs
 
+## [0.4.2] - 2024-08-08
+
+### Added method `removeFromInitOneTimeCallbacks`
+
+Added new method `removeFromInitOneTimeCallbacks` that removes function which was added by `addToInitOneTimeCallbacks`. Later example will be added, also it will be renamed.
+
 ## [0.4.1] - 2024-07-06
 
 ### Added

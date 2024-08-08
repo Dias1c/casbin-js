@@ -5,6 +5,8 @@ const errEnforcerNotInitialized = new Error("Enforcer is not initialized");
 export class CAuthorizer {
   private enforcer?: core.Enforcer;
   /**
+   * TODO: rename to onInitDisposableCallbacks and functions
+   *
    * callback function thats runs and flushes after successful calling funciton init
    */
   private initOneTimeCallbacks: (() => void)[] = [];
@@ -83,6 +85,17 @@ export class CAuthorizer {
    */
   public addToInitOneTimeCallbacks(func: () => void) {
     this.initOneTimeCallbacks.push(func);
+  }
+
+  /**
+   * Removes function from queue of function, which runs once on init and removes from queue
+   * @param func is function which runs after initing enforcer
+   */
+  public removeFromInitOneTimeCallbacks(func: () => void) {
+    this.initOneTimeCallbacks = this.initOneTimeCallbacks.filter((f) => {
+      if (f == func) return false;
+      return true;
+    });
   }
 
   /**

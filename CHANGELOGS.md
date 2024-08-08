@@ -1,5 +1,9 @@
 # Changelogs
 
+## [0.4.3] - 2024-08-08
+
+Nothing changed
+
 ## [0.4.2] - 2024-08-08
 
 ### Added method `removeFromInitOneTimeCallbacks`

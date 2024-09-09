@@ -2,7 +2,7 @@ import { CInternalFunctions } from "./CInternalFunctions";
 import { TFunc } from "./types";
 
 export class CExternalFunctions {
-  controller: CInternalFunctions;
+  private controller: CInternalFunctions;
 
   constructor(_controller: CInternalFunctions) {
     this.controller = _controller;

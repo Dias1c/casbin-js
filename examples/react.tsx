@@ -10,7 +10,7 @@ const Authorizer = new CAuthorizer();
 
 let isLoading = false;
 const loadPermissions = async (onInitCallback?: () => void) => {
-  if (onInitCallback) Authorizer.addToInitOneTimeCallbacks(onInitCallback);
+  if (onInitCallback) Authorizer.onInitDisposableCallbacks.push(onInitCallback);
   if (isLoading) return;
 
   try {
@@ -25,67 +25,60 @@ const loadPermissions = async (onInitCallback?: () => void) => {
 };
 
 /**
- * @returns function which inits `Authorizer` and runs onSuccess if `Authorizer` was inited
- */
-export function useAuthorizerSafelyChecker() {
-  const safelyCheck = useCallback(
-    async ({
-      onSuccess,
-      onFail,
-    }: {
-      onSuccess?: () => Promise<void> | void;
-      onFail?: () => Promise<void> | void;
-    }) => {
-      try {
-        if (Authorizer.isInited()) {
-          loadPermissions(onSuccess);
-          return;
-        }
-        onSuccess && (await onSuccess());
-      } catch (error) {
-        onFail && (await onFail());
-      }
-    },
-    []
-  );
-
-  return { safelyCheck };
-}
-
-/**
  * @returns permissions for given rvals
  */
 export function useAuthorizerCan(rvals: string[]) {
-  const { safelyCheck } = useAuthorizerSafelyChecker();
-  const [can, setCan] = useState(false);
+  const [available, setAvailable] = useState(false);
+
+  const loadIsAvailable = useCallback(async () => {
+    const setAvailableAfterInit = async () => {
+      setAvailable(await Authorizer.can(rvals));
+    };
+
+    try {
+      if (!Authorizer.isInited()) {
+        await loadPermissions(setAvailableAfterInit);
+      } else {
+        await setAvailableAfterInit();
+      }
+    } catch (error) {
+      console.error("loadIsAvailable", error);
+      setAvailable(false);
+    }
+  }, [...rvals]);
 
   useEffect(() => {
-    safelyCheck({
-      onSuccess: async () => setCan(await Authorizer.can(rvals)),
-      onFail: () => setCan(false),
-    });
+    loadIsAvailable();
   }, [...rvals, Authorizer.isInited()]);
 
-  return { can };
+  useEffect(() => {
+    const syncFunction = loadIsAvailable;
+    Authorizer.onInitCallbacks.push(syncFunction);
+    return () => {
+      Authorizer.onInitCallbacks.remove(syncFunction);
+    };
+  }, [available]);
+
+  return { available };
 }
 
 /**
  * @returns children - if `Authorizer.can(rvals)` returns true
- * @returns childrenWhenNotAvailable - if `Authorizer.can(rvals)` returns false
+ * @returns childrenOnRestricted - if `Authorizer.can(rvals)` returns false
  */
 export const AuthorizerCan = ({
   rvals,
   children,
-  childrenWhenNotAvailable,
+  childrenOnRestricted,
 }: {
   rvals: string[];
   children: ReactNode;
-  childrenWhenNotAvailable?: ReactNode;
+  childrenOnRestricted?: ReactNode;
 }) => {
-  const { can } = useAuthorizerCan(rvals);
+  const { available } = useAuthorizerCan(rvals);
 
-  if (can) return children;
-  return childrenWhenNotAvailable;
+  if (available) return children;
+  return childrenOnRestricted;
 };
 
 /**

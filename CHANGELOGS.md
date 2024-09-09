@@ -1,5 +1,23 @@
 # Changelogs
 
+## [0.5.0] - 2024-09-09
+
+### Changed `CAuthorizer` methods related with `initOneTimeCallbacks` field
+
+`CAuthorizer` methods `executeInitOneTimeCallbacks`, `addToInitOneTimeCallbacks`, `removeFromInitOneTimeCallbacks` and field `initOneTimeCallbacks` replaced with `onInitDisposableCallbacks` field. The `onInitDisposableCallbacks` field, is class that stored public methods for user to control `callbacks`. Field `onInitDisposableCallbacks` contains `push`, `remove`, `set` and `clear` methods. Use them instead of `addToInitOneTimeCallbacks`/`removeFromInitOneTimeCallbacks` methods.
+
+The `onInitDisposableCallbacks` works like `initOneTimeCallbacks`.
+
+### Added `onInitCallbacks` to `CAuthorizer`
+
+`onInitCallbacks` works like `onInitDisposableCallbacks`, but `onInitCallbacks` not clears after executing on init.
+
+### Changed React examples
+
+- Removed `useAuthorizerSafelyChecker`.
+- Updated `useAuthorizerCan`.
+- Updated `AuthorizerCan`, `loadPermissions`.
+
 ## [0.4.3] - 2024-08-08
 
 Nothing changed

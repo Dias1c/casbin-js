@@ -1,15 +1,30 @@
 import * as core from "casbin-core";
+import { CExternalFunctions } from "./CFunctions/CExternalFunctions";
+import { CInternalFunctions } from "./CFunctions/CInternalFunctions";
 
-const errEnforcerNotInitialized = new Error("Enforcer is not initialized");
+export const errEnforcerNotInitialized = new Error(
+  "Enforcer is not initialized"
+);
 
 export class CAuthorizer {
   private enforcer?: core.Enforcer;
+
+  private _onInitCallbacks: CInternalFunctions = new CInternalFunctions();
   /**
-   * TODO: rename to onInitDisposableCallbacks and functions
-   *
-   * callback function thats runs and flushes after successful calling funciton init
+   * callback function thats runs after successful calling init funciton
    */
-  private initOneTimeCallbacks: (() => void)[] = [];
+  public onInitCallbacks: CExternalFunctions = new CExternalFunctions(
+    this._onInitCallbacks
+  );
+
+  private _onInitDisposableCallbacks: CInternalFunctions =
+    new CInternalFunctions();
+  /**
+   * callback function thats runs and **flushes** after successful calling init funciton
+   */
+  public onInitDisposableCallbacks: CExternalFunctions = new CExternalFunctions(
+    this._onInitDisposableCallbacks
+  );
 
   /**
    * Inits core enforcer with following model and policy
@@ -46,7 +61,8 @@ export class CAuthorizer {
     const adapter = new core.MemoryAdapter(policy);
 
     this.enforcer = await core.newEnforcer(m, adapter);
-    await this.executeInitOneTimeCallbacks();
+    await this._onInitCallbacks.executeAll();
+    await this._onInitDisposableCallbacks.executeAllAndClear();
   }
 
   public isInited(): boolean {
@@ -66,36 +82,6 @@ export class CAuthorizer {
 
   public getEnforcer() {
     return this.enforcer;
-  }
-
-  /**
-   * Runs all function in `initOneTimeCallbacks` with removing them
-   */
-  private async executeInitOneTimeCallbacks() {
-    if (!this.initOneTimeCallbacks.length) return;
-    while (this.initOneTimeCallbacks.length) {
-      const func = this.initOneTimeCallbacks.shift();
-      if (func) func();
-    }
-  }
-
-  /**
-   * Add function to queue of function, which runs once on init and removes from queue
-   * @param func is function which runs after initing enforcer
-   */
-  public addToInitOneTimeCallbacks(func: () => void) {
-    this.initOneTimeCallbacks.push(func);
-  }
-
-  /**
-   * Removes function from queue of function, which runs once on init and removes from queue
-   * @param func is function which runs after initing enforcer
-   */
-  public removeFromInitOneTimeCallbacks(func: () => void) {
-    this.initOneTimeCallbacks = this.initOneTimeCallbacks.filter((f) => {
-      if (f == func) return false;
-      return true;
-    });
   }
 
   /**

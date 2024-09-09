@@ -57,7 +57,7 @@ export function useAuthorizerCan(rvals: string[]) {
     return () => {
       Authorizer.onInitCallbacks.remove(syncFunction);
     };
-  }, [available]);
+  }, []);
 
   return { available };
 }

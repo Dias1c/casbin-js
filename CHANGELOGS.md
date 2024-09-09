@@ -1,5 +1,11 @@
 # Changelogs
 
+## [0.6.0] - 2024-09-09
+
+### Changed `onInitDisposableCallbacks`, `onInitCallbacks`
+
+Hidden field `controller` in `onInitDisposableCallbacks` and `onInitCallbacks`.
+
 ## [0.5.0] - 2024-09-09
 
 ### Changed `CAuthorizer` methods related with `initOneTimeCallbacks` field

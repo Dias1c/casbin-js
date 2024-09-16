@@ -13,14 +13,15 @@
   </a>
 </p>
 
-Changelogs [here](./CHANGELOGS.md).
-
-See more about casbin [here](https://casbin.org/docs/overview).
+> [!NOTE]
+> About library:
+> - Changelogs [here](./CHANGELOGS.md).
+> - Read more about casbin [here](https://casbin.org/docs/overview).
 
 ## Installation
 
 ```
-npm i @diaskappassov/casbin-js
+npm i --save-exact @diaskappassov/casbin-js@0.6
 ```
 
 ## Usage

@@ -14,7 +14,6 @@
 </p>
 
 > [!NOTE]
-> About library:
 > - Changelogs [here](./CHANGELOGS.md).
 > - Read more about casbin [here](https://casbin.org/docs/overview).
 

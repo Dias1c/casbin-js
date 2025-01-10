@@ -27,8 +27,9 @@ npm i --save-exact @diaskappassov/casbin-js@0.6
 
 You can see all usage examples in [examples directory](./examples).
 
-- [vanilla typescript example](./examples/vanilla.ts)
-- [react typescript example](./examples/react.tsx)
+- [react example](https://codesandbox.io/p/sandbox/laughing-snowflake-ychqzq)
+- [react typescript example code](./examples/react.tsx)
+- [vanilla typescript example file](./examples/vanilla.ts)
 
 ### Initialize Authorizer
 

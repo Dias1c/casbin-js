@@ -13,7 +13,10 @@
   </a>
 </p>
 
+Use [casbin-react](https://github.com/Dias1c/casbin-react) to your react app.
+
 > [!NOTE]
+>
 > - Changelogs [here](./CHANGELOGS.md).
 > - Read more about casbin [here](https://casbin.org/docs/overview).
 
